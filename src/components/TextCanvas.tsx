@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import { TextField, Stack } from "@mui/material";
 
 import { useAppContext } from "../contexts/AppContext";
+import {useSpeech} from "react-text-to-speech";
 
 interface TextCanvasProps {
     fieldText?: string;
@@ -10,15 +11,16 @@ interface TextCanvasProps {
 
 const TextCanvas: React.FC<TextCanvasProps> = (props) => {
     const {text, setText, playTrigger} = useAppContext();
-    const storeText = () => {
-        console.log('Field Value: ', text);
-    };
+    const {Text, speechStatus, start, pause, stop,} = useSpeech({text: text});
     useEffect( () => {
         if(playTrigger){
             console.log("Uttered Something: ", text);
             // TODO:: Add the voice function in here.
+            start();
         }
     }, [playTrigger]);
+    
+
     return (
         <div>
             <Stack spacing={4}>
